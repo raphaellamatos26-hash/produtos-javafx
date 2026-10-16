@@ -1,7 +1,11 @@
 # Cadastro de Produtos — JavaFX
 
 Sistema desktop em Java + JavaFX para gerenciar o cadastro de produtos de um supermercado.
-Trabalho da P1 de Programação Orientada a Objetos III — UNIFAN.
+
+- **Aluna:** Raphaella Barbosa Matos
+- **Disciplina:** Programação Orientada a Objetos III — Avaliação P1
+- **Professor:** Daniel Corrêa da Silva
+- **Instituição:** Centro Universitário Alfredo Nasser (UNIFAN)
 
 ## Funcionalidades
 

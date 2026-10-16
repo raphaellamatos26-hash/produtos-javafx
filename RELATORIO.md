@@ -1,5 +1,8 @@
 # Relatório do Projeto — Cadastro de Produtos
 
+**Aluna:** Raphaella Barbosa Matos<br>
+**Disciplina:** Programação Orientada a Objetos III — P1 · **Professor:** Daniel Corrêa da Silva · UNIFAN
+
 ## 1. Funcionalidades implementadas
 
 | Requisito | Onde está |
