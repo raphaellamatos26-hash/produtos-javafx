@@ -1,0 +1,71 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f4f6f9;
+}
+
+.cabecalho {
+    -fx-background-color: #1f3a5f;
+    -fx-padding: 12 16;
+}
+
+.titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.arquivo {
+    -fx-text-fill: #c9d6e8;
+    -fx-font-size: 11px;
+}
+
+.painel {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #dde3ea;
+    -fx-border-radius: 6;
+    -fx-padding: 14;
+}
+
+.subtitulo {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f3a5f;
+}
+
+.primario {
+    -fx-background-color: #2e6bd1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.perigo {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+}
+
+.relatorio {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+.status {
+    -fx-background-color: #e6ebf1;
+    -fx-padding: 6 16;
+    -fx-text-fill: #33475b;
+}
+
+/* Linhas da tabela destacadas */
+.table-row-cell.estoque-baixo {
+    -fx-background-color: #fff4d6;
+}
+
+.table-row-cell.vencendo {
+    -fx-background-color: #fde2e0;
+}
+
+.table-row-cell.estoque-baixo:selected,
+.table-row-cell.vencendo:selected {
+    -fx-background-color: -fx-selection-bar;
+}

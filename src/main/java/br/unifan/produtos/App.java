@@ -1,29 +1,17 @@
 package br.unifan.produtos;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
- * Ponto de entrada da aplicação JavaFX.
+ * Ponto de entrada do sistema.
+ *
+ * Esta classe NÃO estende Application de propósito: quando a classe que tem o main
+ * estende Application, o Java exige o JavaFX configurado como módulo e não roda
+ * pelo botão Run da IDE. Assim, o main aqui só manda o JavaFX abrir a TelaPrincipal.
  */
-public class App extends Application {
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("principal.fxml"));
-        Scene cena = new Scene(loader.load());
-        cena.getStylesheets().add(App.class.getResource("estilo.css").toExternalForm());
-
-        stage.setTitle("Cadastro de Produtos - Supermercado");
-        stage.setScene(cena);
-        stage.setMinWidth(1000);
-        stage.setMinHeight(600);
-        stage.show();
-    }
+public class App {
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(TelaPrincipal.class, args);
     }
 }

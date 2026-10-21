@@ -50,7 +50,7 @@ Linux / macOS:
 2. Aguarde o download das dependências.
 3. Abra a aba **Maven** (lado direito) → `Plugins > javafx > javafx:run` (duplo clique).
 
-   Ou rode a classe `br.unifan.produtos.Launcher` pelo botão Run.
+   Ou abra a classe `br.unifan.produtos.App` e clique na setinha verde (Run).
 
 > A pasta de trabalho deve ser a raiz do projeto, pois o arquivo de dados fica em
 > `dados/produtos.csv` (caminho relativo). Se o arquivo não existir, ele é criado no primeiro cadastro.
@@ -59,8 +59,8 @@ Linux / macOS:
 
 ```
 src/main/java/br/unifan/produtos/
-├── App.java                      # inicia o JavaFX e carrega a tela (FXML)
-├── Launcher.java                 # atalho para rodar pela IDE
+├── App.java                      # main: ponto de entrada (rode esta classe)
+├── TelaPrincipal.java            # extends Application: carrega a tela (FXML)
 ├── model/
 │   ├── Categoria.java
 │   ├── Produto.java              # composição com Categoria + cálculo da margem
