@@ -13,6 +13,7 @@
 | Listar todos | Tabela principal e botão *Listar todos* (`onListarTodos`) |
 | Persistência em CSV com `;` | `ProdutoCsvRepository` — carrega ao iniciar, regrava após cada operação |
 | Relatórios com Stream API | Aba **Relatórios** (`RelatorioService`) |
+| Cadastro de categorias | Aba **Categorias**: cadastrar, excluir, consultar por ID e listar (`CategoriaController` → `CategoriaService`) |
 
 Extras: os detalhes do produto selecionado aparecem abaixo da tabela (incluindo a margem de lucro), as linhas
 da tabela são coloridas (vermelho = vence em até 60 dias, amarelo = estoque baixo), há uma barra de status e
@@ -78,8 +79,14 @@ O `TreeMap` deixa as categorias e os setores em ordem alfabética.
   basta, como pede o enunciado.
 - **Datas em ISO e números com ponto no CSV**: o arquivo é lido do mesmo jeito em qualquer computador,
   independente do idioma do sistema. Na tela, as datas aparecem como `dd/mm/aaaa` e os preços em `R$`.
-- **Categorias fixas**: há 8 categorias pré-definidas em `CategoriaRepository`, escolhidas por um ComboBox.
-  O foco do trabalho é o cadastro de produtos, e isso evita erros de digitação no setor (que é usado no
-  agrupamento do relatório).
+- **Cadastro de categorias**: as categorias ficam em `dados/categorias.csv` e são gerenciadas na aba
+  **Categorias**. O ID é gerado automaticamente (maior ID + 1, calculado com Stream), não podem existir duas
+  categorias com o mesmo nome, e uma categoria com produtos não pode ser excluída, para nenhum produto ficar
+  sem categoria. No formulário, o setor é escolhido entre os já existentes ou digitado, o que evita erros de
+  digitação no setor usado pelo relatório de agrupamento. Na primeira execução, o sistema cria o arquivo com
+  8 categorias de exemplo de supermercado.
+- **Uma aba, um controlador**: a aba Categorias tem seu próprio FXML (`categorias.fxml`) e seu próprio
+  controlador (`CategoriaController`), incluídos na janela com `fx:include`. O `ProdutoController` entrega a
+  ele os serviços e é avisado quando as categorias mudam, para atualizar a lista do formulário de produtos.
 - **Gravação após cada operação**: o arquivo é regravado inteiro a cada cadastro ou exclusão. Para o volume
   de um trabalho acadêmico isso é simples e garante que o arquivo sempre reflete o estado atual.

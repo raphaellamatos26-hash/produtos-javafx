@@ -107,6 +107,12 @@
                 </HBox>
             </Tab>
 
+            <!-- ================= ABA CATEGORIAS ================= -->
+            <!-- fx:include carrega categorias.fxml; o controlador dela é injetado como "categoriasController" -->
+            <Tab text="Categorias">
+                <fx:include fx:id="categorias" source="categorias.fxml"/>
+            </Tab>
+
             <!-- ================= ABA RELATÓRIOS ================= -->
             <Tab text="Relatórios">
                 <VBox spacing="12">

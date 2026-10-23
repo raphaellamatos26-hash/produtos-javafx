@@ -60,6 +60,13 @@ public class ProdutoService {
                 .toList();
     }
 
+    /** Usado para não deixar excluir uma categoria que ainda tem produtos. */
+    public long contarPorCategoria(int idCategoria) {
+        return produtos.stream()
+                .filter(p -> p.getCategoria().getId() == idCategoria)
+                .count();
+    }
+
     public List<String> getAvisosCarregamento() {
         return repositorio.getAvisosLeitura();
     }

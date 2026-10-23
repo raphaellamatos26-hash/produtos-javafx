@@ -6,6 +6,7 @@ import br.unifan.produtos.model.Produto;
 import br.unifan.produtos.model.ValidacaoException;
 import br.unifan.produtos.repository.CategoriaRepository;
 import br.unifan.produtos.repository.ProdutoCsvRepository;
+import br.unifan.produtos.service.CategoriaService;
 import br.unifan.produtos.service.ProdutoService;
 import br.unifan.produtos.service.RelatorioService;
 import javafx.beans.property.SimpleObjectProperty;
@@ -33,6 +34,7 @@ import java.util.Optional;
 public class ProdutoController {
 
     private static final Path ARQUIVO_CSV = Path.of("dados", "produtos.csv");
+    private static final Path ARQUIVO_CATEGORIAS = Path.of("dados", "categorias.csv");
     private static final DateTimeFormatter DATA_BR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final NumberFormat MOEDA = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
 
@@ -66,21 +68,26 @@ public class ProdutoController {
     @FXML private Label lblStatus;
     @FXML private Label lblArquivo;
 
-    private final CategoriaRepository categoriaRepository = new CategoriaRepository();
+    // Controlador da aba Categorias (vem do fx:include com fx:id="categorias")
+    @FXML private CategoriaController categoriasController;
+
     private final RelatorioService relatorioService = new RelatorioService();
     private final ObservableList<Produto> itensTabela = FXCollections.observableArrayList();
     private ProdutoService produtoService;
+    private CategoriaService categoriaService;
 
     /** Chamado automaticamente pelo FXMLLoader depois de injetar os campos. */
     @FXML
     private void initialize() {
         configurarDatePickers();
-        cbCategoria.setItems(FXCollections.observableArrayList(categoriaRepository.listarTodas()));
         configurarTabela();
-        lblArquivo.setText("Arquivo: " + ARQUIVO_CSV.toAbsolutePath());
+        lblArquivo.setText("Pasta de dados: " + ARQUIVO_CSV.toAbsolutePath().getParent());
 
         try {
+            categoriaService = new CategoriaService(new CategoriaRepository(ARQUIVO_CATEGORIAS));
             produtoService = new ProdutoService(new ProdutoCsvRepository(ARQUIVO_CSV));
+            atualizarCategorias();
+            categoriasController.configurar(categoriaService, produtoService, this::atualizarCategorias, this::status);
             atualizarTabela(produtoService.listarTodos());
             status(produtoService.listarTodos().size() + " produto(s) carregado(s) do arquivo.");
             List<String> avisos = produtoService.getAvisosCarregamento();
@@ -103,6 +110,7 @@ public class ProdutoController {
             tabela.getSelectionModel().select(produto);
             tabela.scrollTo(produto);
             limparFormulario();
+            categoriasController.atualizar();
             status("Produto " + produto.getCodigo() + " cadastrado e salvo no arquivo.");
         } catch (ValidacaoException e) {
             alerta(Alert.AlertType.WARNING, "Verifique os dados do produto", "• " + String.join("\n• ", e.getErros()));
@@ -165,6 +173,7 @@ public class ProdutoController {
             produtoService.excluir(selecionado.getCodigo());
             atualizarTabela(produtoService.listarTodos());
             txtDetalhes.clear();
+            categoriasController.atualizar();
             status("Produto " + selecionado.getCodigo() + " excluído e arquivo atualizado.");
         } catch (PersistenciaException e) {
             alerta(Alert.AlertType.ERROR, "Erro ao salvar", e.getMessage());
@@ -344,6 +353,14 @@ public class ProdutoController {
                 p.getDataFabricacao().format(DATA_BR), p.getDataValidade().format(DATA_BR),
                 MOEDA.format(p.getPrecoCompra()), MOEDA.format(p.getPrecoVenda()),
                 p.getMargemLucro().toPlainString(), p.getQuantidadeEstoque()));
+    }
+
+    /** Recarrega as categorias do ComboBox do formulário (chamado quando a aba Categorias muda algo). */
+    private void atualizarCategorias() {
+        Categoria selecionada = cbCategoria.getValue();
+        cbCategoria.setItems(FXCollections.observableArrayList(categoriaService.listarTodas()));
+        cbCategoria.setValue(selecionada != null && categoriaService.buscarPorId(selecionada.getId()).isPresent()
+                ? selecionada : null);
     }
 
     private void atualizarTabela(List<Produto> produtos) {

@@ -19,8 +19,10 @@ Sistema desktop em Java + JavaFX para gerenciar o cadastro de produtos de um sup
   3. Margem de lucro média por categoria
   4. Produtos agrupados por setor da categoria
   5. Resumo geral do estoque (extra)
-- Dados salvos em `dados/produtos.csv` (separado por `;`), carregados ao iniciar e
-  regravados após cada cadastro ou exclusão.
+- **Categorias** (aba própria): cadastrar, excluir, consultar por ID e listar.
+  O ID é gerado automaticamente e não é possível excluir uma categoria que ainda tem produtos.
+- Dados salvos em `dados/produtos.csv` e `dados/categorias.csv` (separados por `;`), carregados
+  ao iniciar e regravados após cada cadastro ou exclusão.
 
 ## Requisitos
 
@@ -67,18 +69,22 @@ src/main/java/br/unifan/produtos/
 │   ├── ValidacaoException.java
 │   └── PersistenciaException.java
 ├── repository/
-│   ├── CategoriaRepository.java  # categorias disponíveis
-│   └── ProdutoCsvRepository.java # leitura/gravação do CSV
+│   ├── CategoriaRepository.java  # leitura/gravação de categorias.csv
+│   └── ProdutoCsvRepository.java # leitura/gravação de produtos.csv
 ├── service/
-│   ├── ValidadorProduto.java     # regras de validação
-│   ├── ProdutoService.java       # cadastrar, excluir, consultar, listar
+│   ├── ValidadorProduto.java     # regras de validação do produto
+│   ├── ProdutoService.java       # produtos: cadastrar, excluir, consultar, listar
+│   ├── CategoriaService.java     # categorias: cadastrar, excluir, consultar, listar
 │   └── RelatorioService.java     # relatórios com Stream API
 └── controller/
-    └── ProdutoController.java    # eventos da tela
+    ├── ProdutoController.java    # eventos das abas Produtos e Relatórios
+    └── CategoriaController.java  # eventos da aba Categorias
 src/main/resources/br/unifan/produtos/
-├── principal.fxml                # layout da tela
+├── principal.fxml                # layout da janela (abas Produtos e Relatórios)
+├── categorias.fxml               # layout da aba Categorias (incluída com fx:include)
 └── estilo.css
-dados/produtos.csv                # dados de exemplo
+dados/produtos.csv                # produtos de exemplo
+dados/categorias.csv              # categorias de exemplo
 ```
 
 ## Formato do CSV
